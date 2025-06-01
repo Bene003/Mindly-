@@ -1,25 +1,55 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  // Allow cross-origin requests from your development IP
-  allowedDevOrigins: [
-    'http://192.168.2.12:3000',
-    'http://localhost:3000',
-    'http://127.0.0.1:3000'
-  ],
-  
+import {withSentryConfig} from '@sentry/nextjs';
+import type { NextConfig } from 'next'
+
+const nextConfig: NextConfig = {
   // Enable React strict mode for better development experience
   reactStrictMode: true,
+  
+  // Image optimization settings
+  images: {
+    remotePatterns: [
+      { 
+        
+        hostname: 'img.clerk.com' 
+      }
+    ],
+    unoptimized: process.env.NODE_ENV === 'development',
+  },
   
   // Since you're using Turbopack, optimize for it
   experimental: {
     // Turbopack is already enabled via --turbopack flag in your dev script
   },
-  
-  // Image optimization settings (add domains as needed)
-  images: {
-    domains: [],
-    unoptimized: process.env.NODE_ENV === 'development',
-  },
 }
 
-module.exports = nextConfig
+export default withSentryConfig(nextConfig, {
+// For all available options, see:
+// https://www.npmjs.com/package/@sentry/webpack-plugin#options
+
+org: "mindly-2d",
+project: "javascript-nextjs",
+
+// Only print logs for uploading source maps in CI
+silent: !process.env.CI,
+
+// For all available options, see:
+// https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
+
+// Upload a larger set of source maps for prettier stack traces (increases build time)
+widenClientFileUpload: true,
+
+// Uncomment to route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
+// This can increase your server load as well as your hosting bill.
+// Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
+// side errors will fail.
+// tunnelRoute: "/monitoring",
+
+// Automatically tree-shake Sentry logger statements to reduce bundle size
+disableLogger: true,
+
+// Enables automatic instrumentation of Vercel Cron Monitors. (Does not yet work with App Router route handlers.)
+// See the following for more information:
+// https://docs.sentry.io/product/crons/
+// https://vercel.com/docs/cron-jobs
+automaticVercelMonitors: true,
+});
