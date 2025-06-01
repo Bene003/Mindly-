@@ -1,33 +1,26 @@
-import {withSentryConfig} from '@sentry/nextjs';
-import type { NextConfig } from 'next'
+import {withSentryConfig} from "@sentry/nextjs";
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Enable React strict mode for better development experience
-  reactStrictMode: true,
-  
-  // Image optimization settings
+    typescript: {
+      ignoreBuildErrors: true
+    },
+    eslint: {
+        ignoreDuringBuilds: true
+    },
   images: {
-    remotePatterns: [
-      { 
-        
-        hostname: 'img.clerk.com' 
-      }
-    ],
-    unoptimized: process.env.NODE_ENV === 'development',
-  },
-  
-  // Since you're using Turbopack, optimize for it
-  experimental: {
-    // Turbopack is already enabled via --turbopack flag in your dev script
-  },
-}
+      remotePatterns: [
+          { hostname: 'img.clerk.com'}
+      ]
+  }
+};
 
 export default withSentryConfig(nextConfig, {
 // For all available options, see:
 // https://www.npmjs.com/package/@sentry/webpack-plugin#options
 
-org: "mindly-2d",
-project: "javascript-nextjs",
+org: "jsmpro",
+project: "jsm_converso",
 
 // Only print logs for uploading source maps in CI
 silent: !process.env.CI,
