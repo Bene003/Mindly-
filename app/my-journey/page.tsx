@@ -41,28 +41,28 @@ const Profil = async () => {
                       <Image src="/icons/check.svg" alt="checkmark" width={22} height={22}/>
                       <p className="text-2xl font-bold ">{sessionHistory.length}</p>
                   </div>
-                  <div>Lessons completed</div>
+                  <div>Cours terminés</div>
               </div>
               <div className="border border-black rounded-lg p-3 gap-2 flex flex-col h-fit">
                   <div className="flex gap-2 items-center">
                       <Image src="/icons/cap.svg" alt="cap" width={22} height={22}/>
                       <p className="text-2xl font-bold ">{companions.length}</p>
                   </div>
-                  <div>Companions created</div>
+                  <div>Assistants créés</div>
               </div>
           </div>
       </section>
       <Accordion type="multiple">
         <AccordionItem value="recent">
-          <AccordionTrigger className="text-2xl font-bold">Recent Sessions</AccordionTrigger>
+          <AccordionTrigger className="text-2xl font-bold">Sessions récentes</AccordionTrigger>
           <AccordionContent>
-              <CompanionList title ="recent Sessions" companions={sessionHistory}/>
+              <CompanionList title ="Sessions récentes" companions={sessionHistory}/>
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="companions">
-            <AccordionTrigger className="text-2xl font-bold">My Companions {`(${companions.length})`}</AccordionTrigger>
+            <AccordionTrigger className="text-2xl font-bold">Mes assistants {`(${companions.length})`}</AccordionTrigger>
              <AccordionContent>
-                  <CompanionList title="My Companions" companions={companions} />
+                  <CompanionList title="Mes assistants" companions={companions} />
              </AccordionContent>
           </AccordionItem>
       </Accordion>         

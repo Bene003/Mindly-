@@ -3,18 +3,17 @@ import { Bricolage_Grotesque } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import Navbar from "@/components/ui/Navbar";
+import Footer from "@/components/ui/footer";
 import { frFR } from '@clerk/localizations'
 
-
-
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage",
+const bricolageGrotesque = Bricolage_Grotesque({
   subsets: ["latin"],
+  variable: "--font-bricolage-grotesque",
 });
 
 export const metadata: Metadata = {
-  title: "Converso",
-  description: "Real-time AI Teaching Platform",
+  title: "Mindly",
+  description: "Apprends avec tes assistants IA personnalisés",
 };
 
 export default function RootLayout({
@@ -23,13 +22,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${bricolage.variable} antialiased`}>
-        <ClerkProvider localization={frFR} appearance={{ variables: { colorPrimary: '#fe5933' }} }>
+    <ClerkProvider localization={frFR}>
+      <html lang="fr">
+        <body className={`${bricolageGrotesque.variable} antialiased`}>
           <Navbar />
-          {children}
-        </ClerkProvider>
-      </body>
-    </html>
+          <main className="min-h-screen">
+            {children}
+          </main>
+          <Footer />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

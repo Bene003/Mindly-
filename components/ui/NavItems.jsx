@@ -5,9 +5,10 @@ import {usePathname} from "next/navigation";
 import {cn} from "@/lib/utils";
 
 const navItems = [
-    { label:'Home', href: '/' },
-    { label: 'Companions', href: '/companions' },
-    { label: 'My Journey', href: 'my-journey' },
+    { label:'Accueil', href: '/' },
+    { label: 'Assistants', href: '/companions' },
+    { label: 'Créer un Assistant', href: '/companions/new' },
+    { label: 'Mon Parcours', href: '/my-journey' },
 ]
 
 const NavItems = () => {
