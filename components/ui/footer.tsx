@@ -23,12 +23,7 @@ const Footer = () => {
                 <Link href="/" className="text-gray-300 hover:text-white transition-colors">
                   Accueil
                 </Link>
-              </li>
-              <li>
-                <Link href="/companions" className="text-gray-300 hover:text-white transition-colors">
-                  Assistants
-                </Link>
-              </li>
+              </li>              
               <li>
                 <Link href="/companions/new" className="text-gray-300 hover:text-white transition-colors">
                   Créer un Assistant
@@ -45,19 +40,15 @@ const Footer = () => {
           {/* Support Links */}
           <div>
             <h4 className="font-semibold text-white mb-4">Support</h4>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/help" className="text-gray-300 hover:text-white transition-colors">
-                  Centre d'aide
-                </Link>
-              </li>
+            <ul className="space-y-2">             
               <li>
                 <Link href="/contact" className="text-gray-300 hover:text-white transition-colors">
                   Nous contacter
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="text-gray-300 hover:text-white transition-colors">
+                {/* Updated FAQ link to match the FAQPage route */}
+                <Link href="/FAQ" className="text-gray-300 hover:text-white transition-colors">
                   FAQ
                 </Link>
               </li>
@@ -73,7 +64,7 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">
-            © 2024 Mindly. Tous droits réservés.
+            © 2025 Mindly. Tous droits réservés.
           </p>
           <div className="flex gap-6 mt-4 md:mt-0">
             <Link href="/privacy" className="text-gray-400 hover:text-gray-300 text-sm transition-colors">

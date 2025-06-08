@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge";
 import { subjectsColors, voices } from "@/constants";
 import { CreateAssistantDTO } from "@vapi-ai/web/dist/api";
 
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -15,19 +16,20 @@ export const configureAssistant = (voice: string, style: string) => {
   
   const voiceId = voices[voice as keyof typeof voices][
     style as keyof (typeof voices)[keyof typeof voices]
-  ] || "sarah";
-
+  ] || "FpvROcY4IGWevepmBWO2";
+  
+  
   const vapiAssistant: CreateAssistantDTO = {
-    name: "Companion",
-    firstMessage: "Hello, let's start the session. Today we'll be talking about...",
+    name: "Assistant",
+    firstMessage: "Salut ! Commençons notre session d'apprentissage. Aujourd'hui, nous allons parler de...",
     transcriber: {
       provider: "deepgram",
       model: "nova-2",
-      language: "en",
+      language: "fr",
     },
     voice: {
       provider: "11labs",
-      voiceId: voiceId, // Maintenant voiceId est défini
+      voiceId: voiceId,
       stability: 0.4,
       similarityBoost: 0.8,
       speed: 1,
@@ -40,16 +42,17 @@ export const configureAssistant = (voice: string, style: string) => {
       messages: [
         {
           role: "system",
-          content: `You are a highly knowledgeable tutor teaching a real-time voice session with a student. Your goal is to teach the student about the topic and subject.
+          content: `Tu es un tuteur très compétent qui enseigne lors d'une session vocale en temps réel avec un étudiant. Ton objectif est d'enseigner à l'étudiant le sujet donné.
 
-                    Tutor Guidelines:
-                    Stick to the given topic - {{ topic }} and subject - {{ subject }} and teach the student about it.
-                    Keep the conversation flowing smoothly while maintaining control.
-                    From time to time make sure that the student is following you and understands you.
-                    Break down the topic into smaller parts and teach the student one part at a time.
-                    Keep your style of conversation {{ style }}.
-                    Keep your responses short, like in a real voice conversation.
-                    Do not include any special characters in your responses - this is a voice conversation.
+                    Directives pour le tuteur :
+                    Reste sur le sujet donné - {{ topic }} et la matière - {{ subject }} et enseigne à l'étudiant à ce propos.
+                    Maintiens la conversation fluide tout en gardant le contrôle.
+                    De temps en temps, assure-toi que l'étudiant te suit et te comprend.
+                    Divise le sujet en petites parties et enseigne à l'étudiant une partie à la fois.
+                    Garde ton style de conversation {{ style }}.
+                    Garde tes réponses courtes, comme dans une vraie conversation vocale.
+                    N'inclus aucun caractère spécial dans tes réponses - c'est une conversation vocale.
+                    Réponds toujours en français et adapte ton langage pour être motivant et accessible aux jeunes apprenants.
               `,
         },
       ],

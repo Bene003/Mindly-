@@ -1,50 +1,53 @@
-import {getCompanion} from "@/lib/actions/companion.actions";
-import {currentUser} from "@clerk/nextjs/server";
-import {redirect} from "next/navigation";
-import {getSubjectColor} from "@/lib/utils";
+import { getCompanion } from "@/lib/actions/companion.actions";
+import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+import { getSubjectColor } from "@/lib/utils";
 import Image from "next/image";
 import CompanionComponent from "@/components/CompanionComponent";
 
 interface CompanionSessionPageProps {
-    params: Promise<{ id: string}>;
+    params: Promise<{ id: string }>;
 }
 
 const CompanionSession = async ({ params }: CompanionSessionPageProps) => {
     const { id } = await params;
+    const companion = await getCompanion(id);
     const user = await currentUser();
 
-    if(!user) redirect('/sign-in');
+    
 
-    const companion = await getCompanion(id);
+    // If user is not logged in, redirect to sign-in
+    if (!user) redirect('/sign-in');
 
-    // Check if companion exists before destructuring
-    if(!companion) {
+    // If companion is not found, redirect to companions list or show a message
+    if (!companion) {
+        // Option 1: Redirect
         redirect('/companions');
+        // Option 2: Show a message (uncomment if you prefer this)
+        // return <main><div>Aucun assistant trouvé.</div></main>;
     }
 
-    const { name, subject, title, topic, duration, voice, style } = companion;
+    // Now it's safe to destructure
+    const { name, subject, title, topic, duration } = companion;
 
-    // Additional check for required fields
-    if(!name || !subject || !topic) {
-        redirect('/companions');
-    }
+    // If name is missing (corrupted data), redirect as well
+    if (!name) redirect('/companions');
 
     return (
         <main>
             <article className="flex rounded-border justify-between p-6 max-md:flex-col">
                 <div className="flex items-center gap-2">
-                    <div className="size-[72px] flex items-center justify-center rounded-lg max-md:hidden" style={{ backgroundColor: getSubjectColor(subject)}}>
+                    <div
+                        className="size-[72px] flex items-center justify-center rounded-lg max-md:hidden"
+                        style={{ backgroundColor: getSubjectColor(companion.subject) }}
+                    >
                         <Image src={`/icons/${subject}.svg`} alt={subject} width={35} height={35} />
                     </div>
 
                     <div className="flex flex-col gap-2">
                         <div className="flex items-center gap-2">
-                            <p className="font-bold text-2xl">
-                                {name}
-                            </p>
-                            <div className="subject-badge max-sm:hidden">
-                                {subject}
-                            </div>
+                            <p className="font-bold text-2xl">{name}</p>
+                            <div className="subject-badge max-sm:hidden">{subject}</div>
                         </div>
                         <p className="text-lg">{topic}</p>
                     </div>
@@ -53,19 +56,14 @@ const CompanionSession = async ({ params }: CompanionSessionPageProps) => {
                     {duration} minutes
                 </div>
             </article>
-
             <CompanionComponent
+                {...companion}
                 companionId={id}
-                subject={subject}
-                topic={topic}
-                name={name}
-                userName={user.firstName!}
-                userImage={user.imageUrl!}
-                voice={voice}
-                style={style}
+                userName={user.firstName}
+                userImage={user.imageUrl}
             />
         </main>
-    )
-}
+    );
+};
 
-export default CompanionSession
+export default CompanionSession;
