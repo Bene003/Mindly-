@@ -1,13 +1,12 @@
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import {cn, getSubjectColor} from "@/lib/utils";
+import { cn, getSubjectColor } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -15,9 +14,10 @@ interface CompanionsListProps {
     title: string;
     companions?: Companion[];
     classNames?: string;
+    showDuration?: boolean; // Nouvelle prop pour contrôler l'affichage de la durée
 }
 
-const CompanionsList = ({ title, companions, classNames }: CompanionsListProps) => {
+const CompanionsList = ({ title, companions, classNames, showDuration = true }: CompanionsListProps) => {
     return (
         <article className={cn('companion-list', classNames)}>
             <h2 className="font-bold text-3xl">{title}</h2>
@@ -27,15 +27,16 @@ const CompanionsList = ({ title, companions, classNames }: CompanionsListProps) 
                     <TableRow>
                         <TableHead className="text-lg w-2/3">Leçon</TableHead>
                         <TableHead className="text-lg">Sujet</TableHead>
-                        <TableHead className="text-lg text-right">Durée</TableHead>
+                        {showDuration && (
+                            <TableHead className="text-lg text-right">Durée</TableHead>
+                        )}
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {companions?.map((companion, index) => {
                         const { $id, subject, name, topic, duration } = companion;
-                        // Use $id if available, otherwise fall back to index
                         const key = $id || `companion-${index}`;
-                        
+
                         return (
                             <TableRow key={key}>
                                 <TableCell>
@@ -63,24 +64,26 @@ const CompanionsList = ({ title, companions, classNames }: CompanionsListProps) 
                                     <div className="subject-badge w-fit max-md:hidden">
                                         {subject}
                                     </div>
-                                    <div className="flex items-center justify-center rounded-lg w-fit p-2 md:hidden" style={{backgroundColor: getSubjectColor(subject)}}>
-                                <Image
-                                    src={`/icons/${subject}.svg`}
-                                    alt={subject}
-                                    width={18}
-                                    height={18}
-                                />
+                                    <div className="flex items-center justify-center rounded-lg w-fit p-2 md:hidden" style={{ backgroundColor: getSubjectColor(subject) }}>
+                                        <Image
+                                            src={`/icons/${subject}.svg`}
+                                            alt={subject}
+                                            width={18}
+                                            height={18}
+                                        />
                                     </div>
                                 </TableCell>
-                                <TableCell>
-                                    <div className="flex items-center gap-2 w-full justify-end">
-                                        <p className="text-2xl">
-                                            {duration} {' '}
-                                            <span className="max-md:hidden">mins</span>
-                                        </p>
-                                        <Image src="/icons/clock.svg" alt="minutes" width={14} height={14} className="md:hidden" />
-                                    </div>
-                                </TableCell>
+                                {showDuration && (
+                                    <TableCell>
+                                        <div className="flex items-center gap-2 w-full justify-end">
+                                            <p className="text-2xl">
+                                                {duration} {' '}
+                                                <span className="max-md:hidden">mins</span>
+                                            </p>
+                                            <Image src="/icons/clock.svg" alt="minutes" width={14} height={14} className="md:hidden" />
+                                        </div>
+                                    </TableCell>
+                                )}
                             </TableRow>
                         );
                     })}
