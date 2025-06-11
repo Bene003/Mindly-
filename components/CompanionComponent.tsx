@@ -22,10 +22,7 @@ const CompanionComponent = ({ companionId, subject, topic, name, userName, userI
     const [isSpeaking, setIsSpeaking] = useState(false);
     const [isMuted, setIsMuted] = useState(false);
     const [messages, setMessages] = useState<SavedMessage[]>([]);
-
-    useEffect(() => {
-        console.log("VAPI TOKEN (client):", process.env.NEXT_PUBLIC_VAPI_WEB_TOKEN);
-    }, []);
+    
 
     const lottieRef = useRef<LottieRefCurrentProps>(null);
 
