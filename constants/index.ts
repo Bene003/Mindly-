@@ -18,10 +18,12 @@ export const subjectsColors = {
 
 export const voices = {
   male: { 
+    provider: "elevenlabs",
     casual: "aQROLel5sQbj1vuIVi6B", 
     formal: "aQROLel5sQbj1vuIVi6B" 
   },
   female: { 
+    provider: "elevenlabs",
     casual: "FpvROcY4IGWevepmBWO2", 
     formal: "FpvROcY4IGWevepmBWO2" 
   },
@@ -77,7 +79,6 @@ export const recentSessions = [
     color: "#C8FFDF",
   },
 
-
   
 ]
 export const myfavorite = [
@@ -105,4 +106,5 @@ export const myfavorite = [
     duration: 30,
     color: "#BDE7FF",
   },
+  
 ];

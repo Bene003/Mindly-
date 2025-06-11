@@ -19,9 +19,13 @@ export const createCompanion = async (formData: CreateCompanion) => {
 }
 
 export const getAllCompanions = async ({ limit = 10, page = 1, subject, topic }: GetAllCompanions) => {
+    const { userId } = await auth();
     const supabase = createSupabaseClient();
 
     let query = supabase.from('companions').select();
+
+    // Filtrer par l'utilisateur connecté
+    query = query.eq('author', userId);
 
     query = query.order('created_at', { ascending: false });
 
