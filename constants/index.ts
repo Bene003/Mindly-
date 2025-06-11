@@ -76,4 +76,33 @@ export const recentSessions = [
     
     color: "#C8FFDF",
   },
+
+
+  
+]
+export const myfavorite = [
+  {
+    id: "1",
+    subject: "sciences",
+    name: "Ceuvra, l'exploratrice du cerveau",
+    topic: "Réseaux neuronaux du cerveau",
+    duration : 20, 
+    color: "#E5D0FF",
+  },
+  {
+    id: "2",
+    subject: "mathématiques",
+    name: "Compta, la magicienne des nombres",
+    topic: "Dérivées et intégrales",
+    duration: 15,
+    color: "#FFDA6E",
+  },
+  {
+    id: "3",
+    subject: "français",
+    name: "Vocala, la bâtisseuse de vocabulaire",
+    topic: "Littérature française",
+    duration: 30,
+    color: "#BDE7FF",
+  },
 ];

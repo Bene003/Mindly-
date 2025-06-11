@@ -3,21 +3,15 @@
 import CompanionCard from '@/components/CompanionCard'
 import CompanionList from '@/components/CompanionList'
 import CTA from '@/components/CTA'
-import { recentSessions } from '@/constants'
-import { getAllCompanions, getRecentSessions, getUserSessions } from '@/lib/actions/companion.actions'
+import { recentSessions, myfavorite } from '@/constants'
+import { getRecentSessions, getUserSessions } from '@/lib/actions/companion.actions'
 import { getSubjectColor } from '@/lib/utils'
 import { useEffect, useState } from 'react'
 import { SignedIn, SignedOut, useUser } from '@clerk/nextjs'
 
 export default function HomePage() {
-  const [companions, setCompanions] = useState<any[]>([])
   const [recentSessionsCompanions, setRecentSessionsCompanions] = useState<any[]>([])
   const { user, isSignedIn } = useUser()
-
-  // Charger les compagnons vedettes (toujours affichés)
-  useEffect(() => {
-    getAllCompanions({ limit: 8 }).then(setCompanions)
-  }, [])
 
   // Charger les sessions récentes personnelles si connecté
   useEffect(() => {
@@ -30,7 +24,7 @@ export default function HomePage() {
     <main>
       <h1>Nos compagnons vedettes</h1>
       <section className='home-section'>
-        {companions.map((companion) => (
+        {myfavorite.map((companion) => (
           <CompanionCard
             key={companion.id}
             {...companion}
