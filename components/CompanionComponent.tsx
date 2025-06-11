@@ -9,6 +9,7 @@ import soundwaves from '@/constants/soundwaves.json'
 import {addToSessionHistory} from "@/lib/actions/companion.actions";
 
 
+
 enum CallStatus {
     INACTIVE = 'INACTIVE',
     CONNECTING = 'CONNECTING',
@@ -21,6 +22,10 @@ const CompanionComponent = ({ companionId, subject, topic, name, userName, userI
     const [isSpeaking, setIsSpeaking] = useState(false);
     const [isMuted, setIsMuted] = useState(false);
     const [messages, setMessages] = useState<SavedMessage[]>([]);
+
+    useEffect(() => {
+        console.log("VAPI TOKEN (client):", process.env.NEXT_PUBLIC_VAPI_WEB_TOKEN);
+    }, []);
 
     const lottieRef = useRef<LottieRefCurrentProps>(null);
 
@@ -133,15 +138,15 @@ const CompanionComponent = ({ companionId, subject, topic, name, userName, userI
                     <button className="btn-mic" onClick={toggleMicrophone} disabled={callStatus !== CallStatus.ACTIVE}>
                         <Image src={isMuted ? '/icons/mic-off.svg' : '/icons/mic-on.svg'} alt="mic" width={36} height={36} />
                         <p className="max-sm:hidden">
-                            {isMuted ? 'Turn on microphone' : 'Turn off microphone'}
+                            {isMuted ? 'Activer le micro' : 'Désactiver le micro'}
                         </p>
                     </button>
                     <button className={cn('rounded-lg py-2 cursor-pointer transition-colors w-full text-white', callStatus ===CallStatus.ACTIVE ? 'bg-red-700' : 'bg-primary', callStatus === CallStatus.CONNECTING && 'animate-pulse')} onClick={callStatus === CallStatus.ACTIVE ? handleDisconnect : handleCall}>
                         {callStatus === CallStatus.ACTIVE
-                        ? "End Session"
+                        ? "Fin du cours"
                         : callStatus === CallStatus.CONNECTING
-                            ? 'Connecting'
-                        : 'Start Session'
+                            ? 'Connexion'
+                        : 'Lancer le cours'
                         }
                     </button>
                 </div>
@@ -172,6 +177,7 @@ const CompanionComponent = ({ companionId, subject, topic, name, userName, userI
             </section>
         </section>
     )
+    
 }
 
 export default CompanionComponent
