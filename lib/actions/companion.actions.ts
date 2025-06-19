@@ -117,7 +117,7 @@ export const newCompanionPermissions = async () => {
     const { userId, has } = await auth();
     const supabase = createSupabaseClient();
 
-    let limit = 3; // Limite par défaut pour la version gratuite/basic
+    let limit = 1; // Limite par défaut pour la version gratuite/basic
 
     // Version Pro : limite de 10 companions
     if(has({ plan: 'pro' })) {
