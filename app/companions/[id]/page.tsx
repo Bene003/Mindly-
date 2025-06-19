@@ -16,15 +16,14 @@ const CompanionSession = async ({ params }: CompanionSessionPageProps) => {
 
     
 
-    // If user is not logged in, redirect to sign-in
+    
     if (!user) redirect('/sign-in');
 
-    // If companion is not found, redirect to companions list or show a message
+    
     if (!companion) {
-        // Option 1: Redirect
+        
         redirect('/companions');
-        // Option 2: Show a message (uncomment if you prefer this)
-        // return <main><div>Aucun assistant trouvé.</div></main>;
+        
     }
 
     // Now it's safe to destructure

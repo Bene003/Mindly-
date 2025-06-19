@@ -3,7 +3,6 @@ import { twMerge } from "tailwind-merge";
 import { subjectsColors, voices } from "@/constants";
 import { CreateAssistantDTO } from "@vapi-ai/web/dist/api";
 
-
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -13,12 +12,48 @@ export const getSubjectColor = (subject: string) => {
 };
 
 export const configureAssistant = (voice: string, style: string) => {
+  // Get the voice configuration from constants
+  const voiceConfig = voices[voice as keyof typeof voices];
   
-  const voiceId = voices[voice as keyof typeof voices][
-    style as keyof (typeof voices)[keyof typeof voices]
-  ] || "FpvROcY4IGWevepmBWO2";
+  if (!voiceConfig) {
+    throw new Error(`Voice "${voice}" not found in configuration`);
+  }
+
+  // Get the voice ID based on the style
+  const voiceId = voiceConfig[style as keyof typeof voiceConfig] || voiceConfig.casual;
   
-  
+  // Determine the provider and model from the voice config
+  const provider = voiceConfig.provider;
+  const model = voiceConfig.model;
+
+  // Configure voice settings based on provider
+  let voiceSettings: any = {
+    provider: provider,
+    voiceId: voiceId,
+  };
+
+  // Add provider-specific settings
+  if (provider === "11labs") {
+    voiceSettings = {
+      ...voiceSettings,
+      stability: 0.4,
+      similarityBoost: 0.8,
+      speed: 1,
+      style: 0.5,
+      useSpeakerBoost: true,
+    };
+  } else if (provider === "cartesia") {
+    voiceSettings = {
+      ...voiceSettings,
+      model: model,
+    };
+  } else if (provider === "openai") {
+    voiceSettings = {
+      ...voiceSettings,
+      model: model,
+    };
+  }
+
   const vapiAssistant: CreateAssistantDTO = {
     name: "Assistant",
     firstMessage: "Salut ! Commençons notre session d'apprentissage. Aujourd'hui, nous allons parler de...",
@@ -27,15 +62,7 @@ export const configureAssistant = (voice: string, style: string) => {
       model: "nova-2",
       language: "fr",
     },
-    voice: {
-      provider: "11labs",
-      voiceId: voiceId,
-      stability: 0.4,
-      similarityBoost: 0.8,
-      speed: 1,
-      style: 0.5,
-      useSpeakerBoost: true,
-    },
+    voice: voiceSettings,
     model: {
       provider: "openai",
       model: "gpt-4",
@@ -60,5 +87,6 @@ export const configureAssistant = (voice: string, style: string) => {
     clientMessages: [],
     serverMessages: [],
   };
+  
   return vapiAssistant;
 };

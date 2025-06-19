@@ -18,14 +18,17 @@ export const subjectsColors = {
 
 export const voices = {
   male: { 
-    provider: "elevenlabs",
-    casual: "aQROLel5sQbj1vuIVi6B", 
-    formal: "aQROLel5sQbj1vuIVi6B" 
+    provider: "cartesia",
+    casual: "0418348a-0ca2-4e90-9986-800fb8b3bbc0", 
+    formal: "0418348a-0ca2-4e90-9986-800fb8b3bbc0",
+    model: "sonic-2" 
   },
   female: { 
-    provider: "elevenlabs",
-    casual: "FpvROcY4IGWevepmBWO2", 
-    formal: "FpvROcY4IGWevepmBWO2" 
+    provider: "openai",
+    casual: "fable", 
+    formal: "fable",
+    model: "tts-1"
+     
   },
 };
 
