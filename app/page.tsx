@@ -3,6 +3,7 @@
 import CompanionCard from '@/components/CompanionCard'
 import CompanionList from '@/components/CompanionList'
 import CTA from '@/components/CTA'
+import MindlyReviews from '@/app/MindlyReviews/page'
 import { recentSessions, myfavorite } from '@/constants'
 import { getUserSessions } from '@/lib/actions/companion.actions'
 import { getSubjectColor } from '@/lib/utils'
@@ -57,6 +58,11 @@ export default function HomePage() {
           <CTA />
         </section>
       </SignedOut>
+
+      {/* Section des témoignages */}
+      <section className='home-section'>
+        <MindlyReviews />
+      </section>
     </main>
   )
 }
